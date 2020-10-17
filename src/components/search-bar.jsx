@@ -1,36 +1,55 @@
-import React from "react";
-let searchUrl = `https://en.wikipedia.org/w/api.php?action=query&origin=*&list=search&format=json&srsearch=`;
+import React, { useRef } from "react";
 
-export const SearchBar = ({ setData }) => {
-
-  const getData = (endpoint) => {
-    fetch(searchUrl + endpoint)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        data.query.search.forEach(async (it) => {
-          const response = await fetch(
-            `https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=info&pageids=${it.pageid}&inprop=url&format=json`
-          );
-          const json = await response.json();
-
-          it.url = json.query.pages[it.pageid].fullurl;
-        });
-
-        return data;
-      })
-      .then((dataUpdated) => {
-        setData(dataUpdated.query.search);
-      });
-  };
+export const SearchBar = ({ setData, setKeyWord, getData, targetRef, setvisibleCountResults }) => {
+  const textRef = useRef();
 
   return (
-    <input
-      onChange={(evt) => {
-        getData(evt.target.value);
-      }}
-      type="search"
-    ></input>
+    <form className="wiki-form">
+      <div className="search-container">
+        <label htmlFor="search-input">Tekst szukaj:</label>
+        <input
+          id="search-input"
+          className="area"
+          ref={targetRef}
+          onChange={(evt) => {
+            if (evt.target.value === "") {
+              setData(null);
+            }
+            getData(0);
+            setvisibleCountResults(0)
+          }}
+          type="search"
+          name="search"
+          placeholder="na przykład: React"
+        ></input>
+      </div>
+
+      <div className="key-word-container">
+        <label htmlFor="key-word">Tekst podświetlenia:</label>
+        <input
+          className="area"
+          id="key-word"
+          ref={textRef}
+          onChange={(evt) => {
+            if (evt.target.value === "") {
+              setKeyWord("");
+            }
+          }}
+          name="key-word"
+          type="text"
+          placeholder={"na przykład: framework"}
+        ></input>
+
+        <button
+          className="btn"
+          onClick={(evt) => {
+            evt.preventDefault();
+            setKeyWord(textRef.current.value);
+          }}
+        >
+          Podświetl wszystkie
+        </button>
+      </div>
+    </form>
   );
 };

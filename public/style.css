@@ -1,0 +1,58 @@
+body {
+  padding: 10px;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wiki-form {
+  padding: 20px;
+}
+
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-container label {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.area {
+  border-radius: 25px;
+  border: 2px solid black;
+  outline: none;
+}
+
+#search-input {
+  width: 450px;
+  height: 40px;
+
+  font-size: 15px;
+
+  padding: 0 15px;
+}
+
+.key-word-container label {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+#key-word {
+  width: 200px;
+  height: 30px;
+
+  padding: 0 15px;
+  margin-right: 20px;
+}
+
+.btn {
+  outline: none;
+  padding: 10px;
+  border: 2px solid slategrey;
+  border-radius: 25px;
+  background-color: #F2F2F8;
+  cursor: pointer;
+}
